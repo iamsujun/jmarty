@@ -1,5 +1,4 @@
 #labels Phase-Implementation
-= 开发过程 =
+=== 开发过程 ===
 
-  # 编写底层参数解析、foreach循环解析
-  # 变量解析考虑先用String.replace来进行，解析速度有些慢
+ # 编写底层参数解析、foreach循环解析[2010-05-28]
