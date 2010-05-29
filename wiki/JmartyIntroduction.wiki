@@ -1,10 +1,10 @@
 #labels Featured,Phase-Design
-#Jmarty开发过程
+#Jmarty介绍
 
 = Introduction =
 
 Jmarty是一个用JavaScript编写的模板引擎，前期参照smarty的功能开发，以后逐渐扩展。
-在这里记载开发过程中发的点滴……
+
 
 
 = 记载 =
