@@ -1,12 +1,13 @@
-#summary One-sentence summary of this page.
-#labels Featured
+#labels Featured,Phase-Design
+#Jmarty开发过程
 
 = Introduction =
 
 Jmarty是一个用JavaScript编写的模板引擎，前期参照smarty的功能开发，以后逐渐扩展。
+在这里记载开发过程中发的点滴……
 
 
-= Details =
+= 记载 =
 
-开发阶段:
-  * 编写底层参数解析、foreach循环接卸
+  # 编写底层参数解析、foreach循环解析
+  # 变量解析考虑先用String.replace来进行，解析速度有些慢
