@@ -11,12 +11,32 @@ Jmarty是一个用JavaScript编写的模板引擎，前期参照smarty的功能�
 
   # 编写底层参数解析、foreach循环解析
   # 变量解析考虑先用String.replace来进行，解析速度有些慢
-  # foreach循环解析中，对于内容中带有‘</td><td>’标签的正则匹配有问题，不能匹配成功
+  # 用RegExp创建正则时，对于‘$’要用‘\\$’进行处理
+  # foreach循环解析中，对于内容中带有‘`</td>``<td>`’标签的正则匹配有问题，不能匹配成功
 
 = 代码 =
+=== 引用Jmarty ===
 {{{
+<script type='text/javascript' src='jmarty.js'></script>
+}}}
+
+=== 片段 ===
+{{{
+    // Template set
     setTpl: function( tpl ){
         var regExp = /\{\s*(\S*?)\s*}/g;
         $.tpl = tpl.replace( regExp, '{$1}');
+    },
+
+    // Get var RegExp
+    getRegExp: function( key ){
+        var str = '{\\$' + key + '}';
+        var reg = new RegExp( str, "gim" );
+        return reg;
+    },
+
+    // Assign value
+    assign: function( key, value ){
+        $.valueList[ key ] = value;
     },
 }}}
