@@ -1,22 +1,5 @@
 #labels Phase-Implementation
-#Jmarty开发过程
-#sidebar Development
-
-= Introduction =
-
-Jmarty是一个用JavaScript编写的模板引擎，前期参照smarty的功能开发，以后逐渐扩展。
-在这里记载开发过程中发的点滴……
-
-
-= 记载 =
+= 开发过程 =
 
   # 编写底层参数解析、foreach循环解析
   # 变量解析考虑先用String.replace来进行，解析速度有些慢
-
-= 代码 =
-{{{
-    setTpl: function( tpl ){
-        var regExp = /\{\s*(\S*?)\s*}/g;
-        $.tpl = tpl.replace( regExp, '{$1}');
-    },
-}}}
