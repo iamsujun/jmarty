@@ -1,0 +1,61 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type='text/javascript' src='jmarty.js'></script>
+
+<div id="tpl" class="" style='display:none'>
+	<h4>$name{$name }{ $name}{ 	$name }-
+  <br>{$name}{$name		},欢迎你，谢谢使用Jmarty！</h4>
+---
+<table border=1>{Foreach from=$array item=itm}<tr><td>  {$itm.name} </td><td> {$itm.age} </td></tr>{/foreach}</table>
+<hr>{Foreach from=$array item=itm	}= <span style="color:red"> {$itm.name}</span><span style="color:blue"> = </span><span style="color:green">{$itm.age}</span><br>{/foreach}
+</div>
+
+<script>
+
+//$.debug();
+var html = document.getElementById( 'tpl' ).innerHTML;
+$.setTpl( html );
+$.assign( 'name1', 'Victor' );
+$.assign( 'name', 'Victor' );
+var array = {
+  1: {'name':'王军', 'age': 27},
+  2: {'name':'李佳', 'age': 21},
+  3: {'name':'张闯', 'age': 24},
+  };
+
+$.assign( 'array', array );
+//$.assign( 'array1', array );
+
+$.display();
+
+
+//$.debug();
+
+</script>
+<div style='display:none'>
+<hr>
+var html = '====    {foreach from=$array item=itm}    {$itm.name} , {/foreach}==sdsd';
+var getForeach = function(){
+var regExp = /\{foreach from=\$(.*) item=(.*)}(.*)\{\/foreach}/g;
+var regExp = /\{\s*foreach\s*from=\s*\$(.*)\s*item=\s*(.*?)\s*}(.*)\{\s*\/foreach\s*}/g;
+html = html.replace( regExp, function( a, b, c, d ){
+    var string='', data, n, value;
+    data = eval( b );
+    for( key in data )
+    {
+        value = data[ key ];
+        for( o in value )
+        {
+            var reg = c+'.'+o;
+            alert( reg );
+            string += d.replace( reg, value[ o ] );
+        }
+    }
+    return string
+});
+};
+var array;
+array[ 1] = {'name':'wo'};
+getForeach();
+html
+
