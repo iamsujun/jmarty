@@ -1,0 +1,12 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Introduction =
+
+Jmarty是一个用JavaScript编写的模板引擎，前期参照smarty的功能开发，以后逐渐扩展。
+
+
+= Details =
+
+开发阶段:
+  * 编写底层参数解析、foreach循环接卸
