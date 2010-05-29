@@ -11,6 +11,7 @@ Jmarty是一个用JavaScript编写的模板引擎，前期参照smarty的功能�
 
   # 编写底层参数解析、foreach循环解析
   # 变量解析考虑先用String.replace来进行，解析速度有些慢
+  # foreach循环解析中，对于内容中带有‘</td><td>’标签的正则匹配有问题，不能匹配成功
 
 = 代码 =
 {{{
