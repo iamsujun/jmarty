@@ -1,33 +1,59 @@
+/**
+ * Jmarty JavaScript Template Engine v0.0.2
+ * http://code.google.com/p/jmarty/
+ *
+ * Copyright 2010, iamsujun
+ *
+ * Date Victor 2010-05-29 19:29:21
+ */
 (function( window, undefined ){
 var jmarty = {
+    // Engine name
+    name: 'Jmarty',
+
+    // Version
+    version: '0.0.1',
+
+    // Template
+    tpl: '',
+
+    // Var value list
+    valueList: [],
+
+    // Engine set
     ini: function( selector ){
         alert( $.selector );
     },
-    name: 'Jmarty',
-    version: '0.0.1',
-    tpl: '',
-    valueList: [],
 
+    // Template set
     setTpl: function( tpl ){
         var regExp = /\{\s*(\S*?)\s*}/g;
         $.tpl = tpl.replace( regExp, '{$1}');
     },
-    getVar: function( key ){
+
+    // Get var RegExp
+    getRegExp: function( key ){
         var str = '{\\$' + key + '}';
         var reg = new RegExp( str, "gim" );
         return reg;
     },
+
+    // Assign value
     assign: function( key, value ){
         $.valueList[ key ] = value;
     },
+
+    // Set var
     setVar: function(){
         for ( key in $.valueList )
         {
             var value = $.valueList[ key ];
-            var regExp = $.getVar( key );
+            var regExp = $.getRegExp( key );
             $.tpl = $.tpl.replace( regExp, value );
         }
     },
+
+    // Set foreach
     setForeach: function(){
         var regExp = /\{\s*foreach\s*from=\s*\$(.*?)\s*item=\s*(.*?)\s*}(.*)\{\s*\/foreach\s*}/gim;
         //var regExp = new RegExp( '{foreach from=\\$(.*?) item=(.*?)}(.*){\/foreach}', 'gim');
@@ -44,7 +70,7 @@ var jmarty = {
                 item = d;
                 for( o in value )
                 {
-                    reg = $.getVar(c+'.'+o);
+                    reg = $.getRegExp(c+'.'+o);
                     item = item.replace( reg, value[ o ] );
                 }
                 string +=item;
@@ -52,11 +78,15 @@ var jmarty = {
             return string;
         });
     },
+
+    // Display template
     display: function(){
         $.setVar();
         $.setForeach();
         document.write( $.tpl );
     },
+
+    // Debug
     debug: function(){
         $.setTpl( 'Jmarty author is {     $name }- {$name}, { $name }.{ $name}' );
         $.assign( 'name', 'victor' );
