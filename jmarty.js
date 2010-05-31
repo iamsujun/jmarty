@@ -55,14 +55,11 @@ var jmarty = {
 
     // Set foreach
     setForeach: function(){
-        var regExp = /\{\s*foreach\s*from=\s*\$(.*?)\s*item=\s*(.*?)\s*}(.*)\{\s*\/foreach\s*}/gim;
-        //var regExp = new RegExp( '{foreach from=\\$(.*?) item=(.*?)}(.*){\/foreach}', 'gim');
+        var regExp = /\{\s*foreach\s*from=\s*\$(.*?)\s*item=\s*(.*?)\s*}(.*?)\{\s*\/foreach\s*}/gim;
         //var regExp = new RegExp( '{\s*foreach\s*from=\s*\\$(.*?)\s*item=\s*(.*?)\s*}(.*){\s*\/foreach\s*}', 'gim');
         //RegExp.multiline = true;
         $.tpl = $.tpl.replace( regExp, function( a, b, c, d ){
             var string='', data, value, item, reg;
-            //data = eval( b );
-            //alert( d.length )
             data = $.valueList[ b ];
             for( key in data )
             {
