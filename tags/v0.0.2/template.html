@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title> Jmarty </title>
+  <meta name="generator" content="editplus" />
+  <meta name="author" content="iamsujun" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css">
+	h1 {
+		font-size: 30px;
+		font-weight: bolder;
+		border-left: 50px #000 solid;
+		padding-left: 20px;
+	}
+	table{
+		width: 600px;
+		color: #345;
+		font-size: 15px;
+	}
+	table tr{
+		background: #FF9933;
+	}
+	table tr#first-child{
+		background: #FF6600;
+		color: #fff;
+		text-align: center;
+		font-weight: bold;
+	}
+	table tr td:first-child{
+		text-align: center;
+	}
+  </style>
+ </head>
+
+ <body>
+ <div>
+	<h1>Jmarty<sup>beta</sup></h1>
+	<h3>Hello world!</h3>
+
+	<table border=0 cellspacing=0 cellpadding=5>
+		<tr id='first-child'>
+			<td>序号</td> <td>姓名</td> <td>年龄</td> <td>省份</td> <td>手机</td> <td>创建者</td> <td>创建时间</td>
+		</tr>
+		{foreach from=$data item=value} <tr> <td>{$value.id}</td> <td>{$value.name}</td> <td>{$value.age}</td> <td>{$value.province}</td> <td>{$value.phone}</td> <td>{$name}</td> <td>{$value.time}</td> </tr> {/foreach}
+	</table>
+
+ </body>
+</html>
