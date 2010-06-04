@@ -5,11 +5,9 @@
  * @param varchar type 请求类型post,get
  * @param boolean sync 请求是否异步
  */
-function ajax ( url, type, sync )
+var httpRequest, callback;
+function createXMLHttpRequest ()
 {
-	var httpRequest,data;
-	var type = type || 'get';
-	var sync = sync || true;
 	if( document.all )
 	{
 		httpRequest = new window.ActiveXObject("Microsoft.XMLHTTP");
@@ -18,18 +16,24 @@ function ajax ( url, type, sync )
 	{
 		httpRequest = new window.XMLHttpRequest();
 	}
-	//httpRequest.onreadystatechange = showResult;
-	httpRequest.open( type, url, false );
-	httpRequest.send();
-	if ( httpRequest.readyState == 4 && httpRequest.status == 200 )//请求发送成功
+}
+function ajax ( url, fun )
+{
+	callback = fun;
+	createXMLHttpRequest ();
+	httpRequest.onreadystatechange = handleStateChange;
+	httpRequest.open( 'get', url, true );
+	httpRequest.send( null );
+}
+
+function handleStateChange ( )
+{
+	if ( httpRequest.readyState == 4 )//描述一种"已加载"状态；此时，响应已经被完全接收。
 	{
-		data = httpRequest.responseText;
-		httpRequest = null;
-		return data;
-	}
-	else
-	{
-		alert( 'Ajax 请求出错！' );
-		return false;
+		if ( httpRequest.status == 200 )////200表示成功收到
+		{
+			var data = httpRequest.responseText;
+			callback( data );
+		}
 	}
 }
