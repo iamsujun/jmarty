@@ -26,9 +26,10 @@ var jmarty = {
     },
 
     // Template set
-    setTpl: function( tpl ){
+    setTpl: function( html ){
         var regExp = /\{\s*(\S*?)\s*}/g;
-        $.tpl = tpl.replace( regExp, '{$1}');
+        $.tpl = html.replace( regExp, '{$1}');
+        //alert(  $.tpl )
     },
 
     // Get var RegExp
