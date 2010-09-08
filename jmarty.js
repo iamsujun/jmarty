@@ -28,20 +28,22 @@ var jmarty = {
 
     // Template set
     setTpl: function( fileName ){
-		var tpl_index = fileName.replace( /\./g, '_' );
-		if( !$.Template.tpl_index )
-		{
-			$.current_tpl = $.ajax( fileName );
-			var regExp = /\{\s*(\S*?)\s*}/g;
-			$.current_tpl = $.current_tpl.replace( regExp, '{$1}');
-			$.Template.tpl_index = $.current_tpl;
-		}
-		else
-		{
-			$.current_tpl = $.Template.tpl_index;
-		}
-        //alert(  $.current_tpl )
+			var regExp_1 = /\{\s*(\S*?)\s*}/g;
+			var regExp_2 = /\{\s*include\s*file=\s*(['"])(.*?)\1\s*}/gim;//模板嵌套
+			$.current_tpl = $.getTpl( fileName )
+				.replace( regExp_1, '{$1}')
+				.replace( regExp_2, function(a,b,c){ return $.getTpl( c );} );//模板嵌套
     },
+
+	//get Template
+	getTpl: function( fileName )
+	{
+		if( !$.Template[ fileName ] )
+		{
+			$.Template[ fileName ] = $.ajax( fileName );
+		}
+		return $.Template[ fileName ];
+	},
 
     // Get var RegExp
     getRegExp: function( key ){
