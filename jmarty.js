@@ -1,10 +1,10 @@
 /**
- * Jmarty JavaScript Template Engine v0.0.2
+ * Jmarty JavaScript Template Engine v0.1.0
  * http://code.google.com/p/jmarty/
  *
  * Copyright 2010, iamsujun
  *
- * Date Victor 2010-05-29 19:29:21
+ * Date Victor 2010-09-08 12:38:26
  */
 (function( window, undefined ){
 var jmarty = {
@@ -15,7 +15,8 @@ var jmarty = {
     version: '0.0.1',
 
     // Template
-    tpl: '',
+	Template: [],
+    current_tpl: '',
 
     // Var value list
     valueList: [],
@@ -26,10 +27,20 @@ var jmarty = {
     },
 
     // Template set
-    setTpl: function( html ){
-        var regExp = /\{\s*(\S*?)\s*}/g;
-        $.tpl = html.replace( regExp, '{$1}');
-        //alert(  $.tpl )
+    setTpl: function( fileName ){
+		var tpl_index = fileName.replace( /\./g, '_' );
+		if( !$.Template.tpl_index )
+		{
+			$.current_tpl = $.ajax( fileName );
+			var regExp = /\{\s*(\S*?)\s*}/g;
+			$.current_tpl = $.current_tpl.replace( regExp, '{$1}');
+			$.Template.tpl_index = $.current_tpl;
+		}
+		else
+		{
+			$.current_tpl = $.Template.tpl_index;
+		}
+        //alert(  $.current_tpl )
     },
 
     // Get var RegExp
@@ -50,7 +61,7 @@ var jmarty = {
         {
             var value = $.valueList[ key ];
             var regExp = $.getRegExp( key );
-            $.tpl = $.tpl.replace( regExp, value );
+            $.current_tpl = $.current_tpl.replace( regExp, value );
         }
     },
 
@@ -59,7 +70,7 @@ var jmarty = {
         var regExp = /\{\s*foreach\s*from=\s*\$(.*?)\s*item=\s*(.*?)\s*}(.*?)\{\s*\/foreach\s*}/gim;
         //var regExp = new RegExp( '{\s*foreach\s*from=\s*\\$(.*?)\s*item=\s*(.*?)\s*}(.*){\s*\/foreach\s*}', 'gim');
         //RegExp.multiline = true;
-        $.tpl = $.tpl.replace( regExp, function( a, b, c, d ){
+        $.current_tpl = $.current_tpl.replace(/[\r\t\n]/g, ' ').replace( regExp, function( a, b, c, d ){
             var string='', data, value, item, reg;
             data = $.valueList[ b ];
             for( key in data )
@@ -81,19 +92,54 @@ var jmarty = {
     display: function(){
         $.setVar();
         $.setForeach();
-        document.write( $.tpl );
+        document.write( $.current_tpl );
     },
 
     // Debug
     debug: function(){
         $.setTpl( 'Jmarty author is {     $name }- {$name}, { $name }.{ $name}' );
         $.assign( 'name', 'victor' );
-        alert( $.tpl );
+        alert( $.current_tpl );
     },
     assign_1: function( key, value ){
         var reg = new RegExp( key, 'g' );
-        $.tpl = $.tpl.replace( reg, value );
-    }
+        $.current_tpl = $.current_tpl.replace( reg, value );
+    },
+
+	/**
+	 * 简便Ajax请求
+	 *
+	 * @param varchar url  请求地址
+	 * @param varchar type 请求类型post,get
+	 * @param boolean sync 请求是否异步
+	 */
+	ajax: function ( url, type, sync )
+	{
+		var httpRequest,data;
+		var type = type || 'get';
+		var sync = sync || true;
+		if( document.all )
+		{
+			httpRequest = new window.ActiveXObject("Microsoft.XMLHTTP");
+		}
+		else
+		{
+			httpRequest = new window.XMLHttpRequest();
+		}
+		//httpRequest.onreadystatechange = showResult;
+		httpRequest.open( type, url, false );
+		httpRequest.send();
+		if ( httpRequest.readyState == 4 && httpRequest.status == 200 )//请求发送成功
+		{
+			return httpRequest.responseText;
+		}
+		else
+		{
+			alert( 'Ajax 请求出错！' );
+			return false;
+		}
+	}
+
 };
 
 window.jmarty = window.$ = jmarty;

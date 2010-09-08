@@ -41,9 +41,12 @@
 
 	<table border=0 cellspacing=0 cellpadding=5>
 		<tr id='first-child'>
-			<td>序号</td> <td>姓名</td> <td>年龄</td> <td>省份</td> <td>手机</td> <td>创建者</td> <td>创建时间</td>
+			<th>序号</th> <th>姓名</th> <th>年龄</th> <th>省份</th> <th>手机</th> <th>创建者</th> <th>创建时间</th>
 		</tr>
-		{foreach from=$data item=value} <tr> <td>{$value.id}</td> <td>{$value.name}</td> <td>{$value.age}</td> <td>{$value.province}</td> <td>{$value.phone}</td> <td>{$name}</td> <td>{$value.time}</td> </tr> {/foreach}
+		{foreach from=$data item=value}
+    <tr> <td>{$value.id}</td> <td>{$value.name}</td> <td>{$value.age}</td> <td>{$value.province}</td>
+    <td>{$value.phone}</td> <td>{$name}</td> <td>{$value.time}</td> </tr>
+    {/foreach}
 	</table>
 
  </body>
