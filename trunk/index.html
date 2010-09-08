@@ -2,10 +2,14 @@
 <script type='text/javascript' src='jmarty.js'></script>
 <script type='text/javascript' src='ajax.js'></script>
 <div id='content'></div>
+<a href='index.html'>click</a>
+<a href='index.html?123'>click</a>
+<a href='index.html?12'>click 1</a>
 <script>
-ajax( 'template.html', $.setTpl );
-//ajax( 'jmarty.php', $.setTpl );
-$.assign( 'name', 'Victor' );
+jmarty.setTpl( 'template.html' );
+jmarty.setTpl( 'template.html' );
+//jmarty.setTpl( window.Jmary_Template );
+jmarty.assign( 'name', 'Victor' );
 var arr = {
   1: {'id': 1, 'name':'王  军', 'age': 27, 'phone': '13112345678', 'province': '湖北', 'time': '2010-05-01 00:00:00'},
   2: {'id': 2, 'name':'李佳一', 'age': 21, 'phone': '13112345678', 'province': '山东', 'time': '2010-05-05 00:00:00'},
@@ -13,7 +17,12 @@ var arr = {
   4: {'id': 4, 'name':'赵  曼', 'age': 30, 'phone': '13112345678', 'province': '北京', 'time': '2010-06-01 00:00:00'},
   5: {'id': 5, 'name':'司马蓝', 'age': 25, 'phone': '13112345678', 'province': '上海', 'time': '2010-05-23 10:00:00'}
   };
-$.assign( 'data', arr );
-alert( '' )
-$.display();
+for ( var i = 6; i<1000; i++)
+{
+  arr[ i ] = arr[5];
+}
+jmarty.assign( 'data', arr );
+//alert( '' );
+jmarty.display();
+/**/
 </script>
