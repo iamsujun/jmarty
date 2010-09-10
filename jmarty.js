@@ -43,34 +43,27 @@ var jmarty = {
 		return $.Template[ fileName ];
 	},
 
-	// Get var RegExp
-	getRegExp: function( key ){
-		var str = '{\\$' + key + '}';
-		var reg = new RegExp( str, "gim" );
-		return reg;
-	},
-
 	// Assign value
 	assign: function( key, value ){
 		$.valueList[ key ] = value;
 	},
 
 	// Set var
-	setVar: function(){
-		reg = /{\s*\$([\w\d_]+)\s*}/gim
-		$.current_tpl = $.current_tpl.replace( reg, function( a, b ){ return $.valueList[ b ] } );
+	setVar: function( str, data ){
+		var reg = /{\s*\$([\w\d_]+)\s*}/gim;
+		return str.replace( reg, function( a, b ){ return data[ b ] } );
 	},
 
 	// Set foreach
-	setForeach: function(){
+	setForeach: function( str, data ){
 		var regExp = /\{\s*foreach\s*from=\s*\$(.*?)\s*item=\s*(.*?)\s*}(.*?)\{\s*\/foreach\s*}/gim;
-		$.current_tpl = $.current_tpl.replace(/[\r\t\n]/g, ' ')
+		return str.replace(/[\r\t\n]/g, ' ')
 			.replace( regExp, function( a, b, c, d ){
-				var string='', data, reg = /{\s*\$([\w\d_]+)\.([\w\d_]+)\s*}/gim;
-				for( key in $.valueList[ b ] )
+				var string='', v, reg = /{\s*\$([\w\d_]+)\.([\w\d_]+)\s*}/gim;
+				for( key in data[ b ] )
 				{
-					data = $.valueList[ b ][key];
-					string += d.replace( reg, function( l, k, j ){ return eval( 'data.'+j); } );
+					v = $.valueList[ b ][key];
+					string += d.replace( reg, function( l, k, j ){ return eval( 'v.'+j); } );
 				}
 				return string;
 			});
@@ -78,16 +71,13 @@ var jmarty = {
 
 	// Display template
 	display: function(){
-		$.setForeach();
-		$.setVar();
-		document.write( $.current_tpl );
+		var html = $.setForeach( $.current_tpl, $.valueList );
+		html = $.setVar( html, $.valueList );
+		document.write( html );
 	},
 
 	// Debug
 	debug: function(){
-		$.setTpl( 'Jmarty author is {     $name }- {$name}, { $name }.{ $name}' );
-		$.assign( 'name', 'victor' );
-		alert( $.current_tpl );
 	},
 
 	/**
