@@ -23,29 +23,29 @@ var jmarty = {
 
 	// Engine set
 	ini: function( selector ){
-		alert( $.selector );
+		alert( jmarty.selector );
 	},
 
 	// Template set
 	setTpl: function( fileName ){
 			var regExp_2 = /\{\s*include\s*file=\s*(['"])(.*?)\1\s*}/gim;//模板嵌套
-			$.current_tpl = $.getTpl( fileName )
-				.replace( regExp_2, function(a,b,c){ return $.getTpl( c );} );//模板嵌套
+			jmarty.current_tpl = jmarty.getTpl( fileName )
+				.replace( regExp_2, function(a,b,c){ return jmarty.getTpl( c );} );//模板嵌套
 	},
 
 	//get Template
 	getTpl: function( fileName )
 	{
-		if( !$.Template[ fileName ] )
+		if( !jmarty.Template[ fileName ] )
 		{
-			$.Template[ fileName ] = $.ajax( fileName );
+			jmarty.Template[ fileName ] = jmarty.ajax( fileName );
 		}
-		return $.Template[ fileName ];
+		return jmarty.Template[ fileName ];
 	},
 
 	// Assign value
 	assign: function( key, value ){
-		$.valueList[ key ] = value;
+		jmarty.valueList[ key ] = value;
 	},
 
 	// Set var
@@ -59,11 +59,11 @@ var jmarty = {
 		var regExp = /\{\s*foreach\s*from=\s*\$(.*?)\s*item=\s*(.*?)\s*}(.*?)\{\s*\/foreach\s*}/gim;
 		return str.replace(/[\r\t\n]/g, ' ')
 			.replace( regExp, function( a, b, c, d ){
-				var string='', v, reg = /{\s*\$([\w\d_]+)\.([\w\d_]+)\s*}/gim;
+				var string='', v, reg = /{\s*\$([\w\d_]+)(\.([\w\d_]+))?\s*}/gim;
 				for( key in data[ b ] )
 				{
-					v = $.valueList[ b ][key];
-					string += d.replace( reg, function( l, k, j ){ return eval( 'v.'+j); } );
+					v = jmarty.valueList[ b ][key];
+					string += d.replace( reg, function( l, k, m, j ){ return v[j] ? v[j] : v; });
 				}
 				return string;
 			});
@@ -71,8 +71,8 @@ var jmarty = {
 
 	// Display template
 	display: function(){
-		var html = $.setForeach( $.current_tpl, $.valueList );
-		html = $.setVar( html, $.valueList );
+		var html = jmarty.setForeach( jmarty.current_tpl, jmarty.valueList );
+		html = jmarty.setVar( html, jmarty.valueList );
 		document.write( html );
 	},
 
@@ -109,7 +109,6 @@ var jmarty = {
 		}
 		else
 		{
-			alert( 'Ajax 请求出错！' );
 			return false;
 		}
 	}
