@@ -1,10 +1,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type='text/javascript' src='jmarty.js'></script>
-<script type='text/javascript' src='ajax.js'></script>
 <div id='content'></div>
 <a href='index.html'>click</a>
 <a href='index.html?123'>click</a>
-<a href='index.html?12'>click 1</a>
+<a href='javascript:void(0);' onclick='get()'>click 1</a>
 <script>
 jmarty.setTpl( 'template.html' );
 jmarty.setTpl( 'template.html' );
@@ -17,7 +16,7 @@ var arr = {
   4: {'id': 4, 'name':'赵  曼', 'age': 30, 'phone': '13112345678', 'province': '北京', 'time': '2010-06-01 00:00:00'},
   5: {'id': 5, 'name':'司马蓝', 'age': 25, 'phone': '13112345678', 'province': '上海', 'time': '2010-05-23 10:00:00'}
   };
-for ( var i = 6; i<1000; i++)
+for ( var i = 6; i<10; i++)
 {
   arr[ i ] = arr[5];
 }
@@ -25,4 +24,13 @@ jmarty.assign( 'data', arr );
 //alert( '' );
 jmarty.display();
 /**/
+
+function get()
+{
+  var data = jmarty.get( 'test.php' );
+  jmarty.setTpl( 'child_tpl.html' );
+
+  jmarty.assign( 'data', data );
+  jmarty.display();
+}
 </script>
